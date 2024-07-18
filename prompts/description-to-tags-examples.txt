@@ -1,0 +1,11 @@
+Example 1:
+Input: In this image we can see a painting of a hen and a ball on the mat. The background is dark.
+Output: hen, mat, egg
+
+Example 2:
+Input: In this painting we can see a painting of two persons. The background is dark.
+Output: 2people, dark_background
+
+Example 3:
+Input: This is an animated image. In this image we can see some insects and grass on the ground.
+Output: insect, grass, ground

@@ -1,0 +1,89 @@
+{
+  "1": {
+    "inputs": {
+      "image": "c51.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "2": {
+    "inputs": {
+      "model_name": "4x-UltraMix_Restore.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model 1"
+    }
+  },
+  "3": {
+    "inputs": {
+      "upscale_model": [
+        "2",
+        0
+      ],
+      "image": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "4": {
+    "inputs": {
+      "model_name": "1x-SheeepIt.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model 2"
+    }
+  },
+  "6": {
+    "inputs": {
+      "upscale_model": [
+        "4",
+        0
+      ],
+      "image": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "9": {
+    "inputs": {
+      "upscale_method": "nearest-exact",
+      "scale_by": 0.33,
+      "image": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "16": {
+    "inputs": {
+      "filename_prefix": "upscaled",
+      "images": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+}
