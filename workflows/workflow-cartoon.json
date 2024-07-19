@@ -1,0 +1,233 @@
+{
+  "4": {
+    "inputs": {
+      "ckpt_name": "albedobaseXL_v21.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint - BASE"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": [
+        "82",
+        0
+      ],
+      "clip": [
+        "117",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "7": {
+    "inputs": {
+      "text": [
+        "82",
+        1
+      ],
+      "clip": [
+        "117",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "10": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": [
+        "122",
+        2
+      ],
+      "steps": 35,
+      "cfg": 7,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
+      "start_at_step": 0,
+      "end_at_step": 35,
+      "return_with_leftover_noise": "enable",
+      "model": [
+        "117",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "119",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Advanced) - BASE"
+    }
+  },
+  "17": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "4",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "82": {
+    "inputs": {
+      "text_positive": "<lora:Childrens_book_illustration_v2.safetensors:1.0> childrens_book_illustration tree, sand, beach, bordered, white background",
+      "text_negative": "(blur, blurry, grainy), morbid, ugly,  malformed, draft, cropped, censored, jpeg artifacts, out of focus, glitch, duplicate,, (bad hands, bad anatomy, bad body, bad face, bad teeth, bad arms, bad legs, bad eyes, deformities:1.3)",
+      "style": "base",
+      "log_prompt": false,
+      "style_positive": false,
+      "style_negative": false
+    },
+    "class_type": "SDXLPromptStyler",
+    "_meta": {
+      "title": "SDXL Prompt Styler"
+    }
+  },
+  "117": {
+    "inputs": {
+      "lora_name": "Childrens_Book_Illustration_v2.1.safetensors",
+      "strength_model": 1,
+      "strength_clip": 1,
+      "model": [
+        "4",
+        0
+      ],
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "119": {
+    "inputs": {
+      "width": 1280,
+      "height": 640,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "122": {
+    "inputs": {
+      "number_type": "integer",
+      "minimum": 100,
+      "maximum": 65536,
+      "seed": 130056714450495
+    },
+    "class_type": "Random Number",
+    "_meta": {
+      "title": "Random Number"
+    }
+  },
+  "126": {
+    "inputs": {
+      "inStr": "albedobaseXL_v21.safetensors"
+    },
+    "class_type": "String",
+    "_meta": {
+      "title": "String"
+    }
+  },
+  "127": {
+    "inputs": {
+      "filename": "%time_%seed",
+      "path": "CBA/2024-07-08",
+      "extension": "jpeg",
+      "quality": 95,
+      "positive": [
+        "82",
+        0
+      ],
+      "negative": [
+        "82",
+        1
+      ],
+      "seed": [
+        "122",
+        2
+      ],
+      "modelname": [
+        "126",
+        0
+      ],
+      "counter": 0,
+      "time_format": "%Y-%m-%d-%H%M%S",
+      "images": [
+        "131",
+        0
+      ]
+    },
+    "class_type": "Image Save with Prompt (WLSH)",
+    "_meta": {
+      "title": "Image Save with Prompt (WLSH)"
+    }
+  },
+  "128": {
+    "inputs": {
+      "model_name": "4x-UltraMix_Restore.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "129": {
+    "inputs": {
+      "upscale_model": [
+        "128",
+        0
+      ],
+      "image": [
+        "17",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "131": {
+    "inputs": {
+      "upscale_method": "nearest-exact",
+      "scale_by": 0.5,
+      "image": [
+        "129",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  }
+}
