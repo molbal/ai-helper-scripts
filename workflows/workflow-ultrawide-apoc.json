@@ -1,0 +1,208 @@
+{
+  "4": {
+    "inputs": {
+      "ckpt_name": "albedobaseXL_v21.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint - BASE"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": [
+        "82",
+        0
+      ],
+      "clip": [
+        "117",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "7": {
+    "inputs": {
+      "text": [
+        "82",
+        1
+      ],
+      "clip": [
+        "117",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "10": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 714766086648253,
+      "steps": 35,
+      "cfg": 6.6000000000000005,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "start_at_step": 0,
+      "end_at_step": 35,
+      "return_with_leftover_noise": "enable",
+      "model": [
+        "117",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "119",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Advanced) - BASE"
+    }
+  },
+  "17": {
+    "inputs": {
+      "samples": [
+        "10",
+        0
+      ],
+      "vae": [
+        "4",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "60": {
+    "inputs": {
+      "upscale_model": [
+        "61",
+        0
+      ],
+      "image": [
+        "17",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "61": {
+    "inputs": {
+      "model_name": "4x-UltraMix_Restore.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "69": {
+    "inputs": {
+      "upscale_method": "nearest-exact",
+      "scale_by": 0.6,
+      "image": [
+        "60",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "82": {
+    "inputs": {
+      "text_positive": "<lora:Apocalyptic:1.5> <lora:add-detail-xl.safetensors:1.8>,  apocalyptic, 32k UHD resolution, RAW, best quality, (((Canada)))",
+      "text_negative": "(oil painting), (worst quality, low quality, normal quality, lowres, low details, oversaturated, undersaturated, overexposed, underexposed, grayscale, bad photo, bad photography, bad art:1.4), (watermark, signature, text font, username, error, logo, words, letters, digits, autograph, trademark, name:1.2), (blur, blurry, grainy), morbid, ugly, asymmetrical, mutated malformed, mutilated, poorly lit, bad shadow, draft, cropped, out of frame, cut off, censored, jpeg artifacts, out of focus, glitch, duplicate,, (bad hands, bad anatomy, bad body, bad face, bad teeth, bad arms, bad legs, deformities:1.3)",
+      "style": "sai-photographic",
+      "log_prompt": false,
+      "style_positive": true,
+      "style_negative": true
+    },
+    "class_type": "SDXLPromptStyler",
+    "_meta": {
+      "title": "SDXL Prompt Styler"
+    }
+  },
+  "116": {
+    "inputs": {
+      "lora_name": "add-detail-xl.safetensors",
+      "strength_model": 1,
+      "strength_clip": 1,
+      "model": [
+        "4",
+        0
+      ],
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "117": {
+    "inputs": {
+      "lora_name": "Apocalyptic.safetensors",
+      "strength_model": 1.2,
+      "strength_clip": 1,
+      "model": [
+        "116",
+        0
+      ],
+      "clip": [
+        "116",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "119": {
+    "inputs": {
+      "width": 2136,
+      "height": 600,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "120": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "only_preview": false,
+      "images": [
+        "69",
+        0
+      ]
+    },
+    "class_type": "easy imageSave",
+    "_meta": {
+      "title": "SaveImage"
+    }
+  }
+}

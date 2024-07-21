@@ -102,7 +102,7 @@ def main():
     for prompt in tqdm(prompt_list, desc='Generating images', unit='image'):
         try:
             wf.set_node_param("SDXL Prompt Styler", "text_positive", prompt)
-            results = api.queue_and_wait_images(wf, output_node_title="Image Save with Prompt (WLSH)")
+            results = api.queue_and_wait_images(wf, output_node_title="SaveImage")
             for filename, image_data in results.items():
                 current_time = int(time.time())
                 output_image_path = f"{args.outdir}/{current_time}-{args.style}.png"

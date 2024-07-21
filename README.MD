@@ -163,12 +163,13 @@ pip install tqdm ollama comfy_api_simplified websockets
 To use this script, run it from the command line with the appropriate parameters:
 
 ```sh
-python inference/batch-generate.py --count=<number_of_images> --workflow=<workflow_file> --example_prompts=<example_prompts_file> --prompt_file=<prompt_template_file> --style=<image_style> --outdir=<output_directory> --llm=<local_language_model> --prompt_prefix=<prompt_prefix> [--kill_processes] [--save_prompt_txt]
+python ./inference/batch-generate.py --count=<number_of_images> --workflow=<workflow_file> --example_prompts=<example_prompts_file> --prompt_file=<prompt_template_file> --style=<image_style> --outdir=<output_directory> --llm=<local_language_model> --prompt_prefix=<prompt_prefix> [--kill_processes] [--save_prompt_txt]
 ```
 
-Example:
+Some examples:
 ```sh
-python inference/batch-generate.py --kill_processes --save_prompt_txt --count 30 --outdir=output/2024-07-20 --llm llama3:8b-instruct-q6_K
+python ./inference/batch-generate.py --kill_processes --save_prompt_txt --count 30 --outdir=output/2024-07-20 --llm llama3:8b-instruct-q6_K
+python ./inference/batch-generate.py --kill_processes --save_prompt_txt --count 5 --outdir=output/2024-07-21/apocalyptic --llm llama3:8b-instruct-q6_K --style=sai-photographic --workflow workflows/workflow-ultrawide-apoc.json --example_prompts prompts/example-apoc.txt --prompt_prefix "<lora:Apocalyptic:1.5> <lora:add-detail-xl.safetensors:1.8> apocalyptic, 32k UHD resolution, RAW, best quality, ultrawide"
 ```
 
 #### Notes
