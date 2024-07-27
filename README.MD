@@ -1,5 +1,4 @@
 # AI Helper Scripts
-=====================
 
 A collection of scripts to aid in various tasks related to data preparation and inference.
 
