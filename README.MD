@@ -170,10 +170,12 @@ Some examples:
 ```sh
 python ./inference/batch-generate.py --kill_processes --save_prompt_txt --count 30 --outdir=output/2024-07-20 --llm llama3:8b-instruct-q6_K
 python ./inference/batch-generate.py --kill_processes --save_prompt_txt --count 5 --outdir=output/2024-07-21/apocalyptic --llm llama3:8b-instruct-q6_K --style=sai-photographic --workflow workflows/workflow-ultrawide-apoc.json --example_prompts prompts/example-apoc.txt --prompt_prefix "<lora:Apocalyptic:1.5> <lora:add-detail-xl.safetensors:1.8> apocalyptic, 32k UHD resolution, RAW, best quality, ultrawide"
+python ./inference/batch-generate.py --kill_processes --count 30 --outdir=output/2024-07-24/apocalyptic --llm llama3.1:8b-instruct-q5_1 --style="sai-digital art" --workflow workflows/workflow-ultrawide-apoc-v2.json --example_prompts prompts/example-apoc.txt --prompt_prefix "<lora:Apocalyptic-v2-albedobase.safetensors:0.65> <lora:add-detail-xl.safetensors:1.2>,  apocalyptic "
 ```
 
 #### Notes
 - The script supports various image generation workflows by specifying different workflow files.
 - The script will create the output directory if it does not exist.
 - If the `--kill_processes` flag is used, the script will attempt to terminate Ollama processes related to the language model after generating prompts, to free up VRAM to load other models
+- The script will look for 'KSampler (Advanced) - BASE' titled node and attempt to set its seed to a random number each iteration
 ```

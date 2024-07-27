@@ -2,7 +2,7 @@ Make me an image prompt such as one of these:
 
 {example}
 
-Combine these ideas randomly, add your own matching aesthetics style when you think its good and output only one the descriptions. Keep prompt small and do not respond with "here is a..."
+Combine these ideas randomly, add your own matching aesthetics style when you think its good and output only one the descriptions. BE WEIRD QUIRKY Keep prompt small and do not respond with "here is a..."
 
 Generate {n} prompts and return them each in new lines
 

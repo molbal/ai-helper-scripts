@@ -15,8 +15,8 @@
         0
       ],
       "clip": [
-        "117",
-        1
+        "122",
+        0
       ]
     },
     "class_type": "CLIPTextEncode",
@@ -31,8 +31,8 @@
         1
       ],
       "clip": [
-        "117",
-        1
+        "122",
+        0
       ]
     },
     "class_type": "CLIPTextEncode",
@@ -43,14 +43,14 @@
   "10": {
     "inputs": {
       "add_noise": "enable",
-      "noise_seed": 94745627,
-      "steps": 30,
-      "cfg": 6.6000000000000005,
-      "sampler_name": "dpmpp_2m",
-      "scheduler": "karras",
+      "noise_seed": 735022040834496,
+      "steps": 35,
+      "cfg": 6,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "normal",
       "start_at_step": 0,
-      "end_at_step": 35,
-      "return_with_leftover_noise": "enable",
+      "end_at_step": 40,
+      "return_with_leftover_noise": "disable",
       "model": [
         "117",
         0
@@ -107,7 +107,7 @@
   },
   "61": {
     "inputs": {
-      "model_name": "4x-UltraMix_Restore.pth"
+      "model_name": "4xNomosWebPhoto_RealPLKSR.pth"
     },
     "class_type": "UpscaleModelLoader",
     "_meta": {
@@ -130,10 +130,10 @@
   },
   "82": {
     "inputs": {
-      "text_positive": "<lora:Apocalyptic:1.2> <lora:add-detail-xl.safetensors:1.1>,  apocalyptic, 32k UHD resolution, RAW, best quality, (((Canada)))",
-      "text_negative": "(oil painting), (worst quality, low quality, normal quality, lowres, low details, oversaturated, undersaturated, overexposed, underexposed, grayscale, bad photo, bad photography, bad art:1.4), (watermark, signature, text font, username, error, logo, words, letters, digits, autograph, trademark, name:1.2), (blur, blurry, grainy), morbid, ugly, asymmetrical, mutated malformed, mutilated, poorly lit, bad shadow, draft, cropped, out of frame, cut off, censored, jpeg artifacts, out of focus, glitch, duplicate,, (bad hands, bad anatomy, bad body, bad face, bad teeth, bad arms, bad legs, deformities:1.3)",
-      "style": "sai-photographic",
-      "log_prompt": false,
+      "text_positive": "<lora:Apocalyptic-v2-albedobase.safetensors:0.65> <lora:add-detail-xl.safetensors:1.2>,  apocalyptic",
+      "text_negative": "embedding:negativeXL_D",
+      "style": "sai-digital art",
+      "log_prompt": true,
       "style_positive": true,
       "style_negative": true
     },
@@ -163,8 +163,8 @@
   },
   "117": {
     "inputs": {
-      "lora_name": "Apocalyptic.safetensors",
-      "strength_model": 1.2,
+      "lora_name": "Apocalyptic-v2-albedobase.safetensors",
+      "strength_model": 1,
       "strength_clip": 1,
       "model": [
         "116",
@@ -182,8 +182,8 @@
   },
   "119": {
     "inputs": {
-      "width": 768,
-      "height": 768,
+      "width": 2136,
+      "height": 600,
       "batch_size": 1
     },
     "class_type": "EmptyLatentImage",
@@ -203,6 +203,31 @@
     "class_type": "easy imageSave",
     "_meta": {
       "title": "SaveImage"
+    }
+  },
+  "121": {
+    "inputs": {
+      "images": [
+        "17",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "122": {
+    "inputs": {
+      "stop_at_clip_layer": -1,
+      "clip": [
+        "117",
+        1
+      ]
+    },
+    "class_type": "CLIPSetLastLayer",
+    "_meta": {
+      "title": "CLIP Set Last Layer"
     }
   }
 }

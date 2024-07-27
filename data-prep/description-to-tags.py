@@ -18,7 +18,7 @@ def rewrite_description(description, few_shot_examples, model_name):
     """
     prompt = (
         f"{few_shot_examples}\n"
-        f"Rewrite the following description into a tag-based format. Use commas to separate tags. Remove mediums such as painting, cartoon:\n"
+        f"Rewrite the following description into a tag-based format. Use commas to separate tags. Respond with only tags, do not write 'Here is the rewritten output' etc. Remove mediums such as painting, cartoon:\n"
         f"Input: {description}\n"
         f"Output:"
     )

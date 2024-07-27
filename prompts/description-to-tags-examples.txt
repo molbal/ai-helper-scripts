@@ -1,11 +1,15 @@
 Example 1:
 Input: In this image we can see a painting of a hen and a ball on the mat. The background is dark.
-Output: hen, mat, egg
+Output: hen, ball, mat, dark background
 
 Example 2:
-Input: In this painting we can see a painting of two persons. The background is dark.
-Output: 2people, dark_background
+Input: A person is walking down the street. There is a car parked on the side of the street in front of the person. There are power lines hanging above the street next to a hill.
+Output: person, walking, street, car, parking, power lines, hill
 
 Example 3:
-Input: This is an animated image. In this image we can see some insects and grass on the ground.
-Output: insect, grass, ground
+Input: A painting of a bed in a room. There are two people laying on the bed. There is a ceiling fan hanging from the ceiling.
+Output: bed, room, 2people, laying, ceiling fan
+
+Example 4:
+Input: A man is standing in a field of tall grass. There is a wooden fence in front of the field. A house is sitting behind the fence. There are wires hanging above the house. A large animal is standing next to the man.
+Output: man, standing, field, tall grass, wooden fence, house, wires, animal

@@ -1,5 +1,6 @@
 import json
 import os
+import random
 import time
 import argparse
 import subprocess
@@ -17,7 +18,7 @@ def parse_arguments():
     parser.add_argument('--style', type=str, default='base', help='Style to use.')
     parser.add_argument('--outdir', type=str, default='output', help='Output directory to save images to.')
     parser.add_argument('--llm', type=str, default='gemma2', help='LLM to generate prompts.')
-    parser.add_argument('--prompt_prefix', type=str, default='<lora:Childrens_book_illustration_v2.1.safetensors:1.0> childrens_book_illustration', help='Prefix for prompts. Good for LoRA and trigger words.')
+    parser.add_argument('--prompt_prefix', type=str, default='<lora:Childrens_book_illustration_v2.1.safetensors:1.0> childrens_book_illustration cd ', help='Prefix for prompts. Good for LoRA and trigger words.')
     parser.add_argument('--kill_processes', action='store_true', help='Kill ollama processes after generating prompts.')
     parser.add_argument('--save_prompt_txt', action='store_true', help='If yes, saves prompt text next to the picture.')
     return parser.parse_args()
@@ -40,28 +41,28 @@ def save_prompts(file_path, prompts):
 
 
 def generate_prompts(prompt_template, example_prompts, n, prompt_prefix, model):
-    prompt = prompt_template.format(example=example_prompts, n=n)
+    prompt = prompt_template.format(example=example_prompts, n=max(n, 20))
+    prompt_list = []
 
-    for i in range(5):
+    while len(prompt_list) < n:
         response = ollama.chat(
             model=model,
             messages=[{'role': 'user', 'content': prompt}],
-            options={'temperature': 0.8}
+            options={'temperature': 0.4}
         )
 
         content = response['message']['content']
         prompts = [line.strip() for line in content.split('\n') if line.strip()]  # split by newline and strip whitespace
 
         if prompts:
-            prompt_list = [prompt_prefix + p for p in prompts]
-            return prompt_list
-        else:
-            print(f"No prompts found in response (attempt {i+1}/5): {content}")
+            prompt_list.extend([prompt_prefix + p for p in prompts])
 
-        if i == 4:
-            return []  # give up after 5 attempts
+        if len(prompt_list) >= n:
+            return prompt_list[:n]
         else:
-            continue  # try again
+            print(f"Currently at: {len(prompt_list)} prompts...")
+
+    return prompt_list[:n]  # Just in case
 
 
 def kill_ollama_processes():
@@ -102,6 +103,7 @@ def main():
     for prompt in tqdm(prompt_list, desc='Generating images', unit='image'):
         try:
             wf.set_node_param("SDXL Prompt Styler", "text_positive", prompt)
+            wf.set_node_param("KSampler (Advanced) - BASE","noise_seed", random.randint(0,1024*1024))
             results = api.queue_and_wait_images(wf, output_node_title="SaveImage")
             for filename, image_data in results.items():
                 current_time = int(time.time())

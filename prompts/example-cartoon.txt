@@ -1,6 +1,5 @@
-white background, borderless, fairy, elf
-white background, borderless, ogre
-white background, borderless, orc of mordor, desolate
-white background, borderless, high elf
-white background, borderless, tiefling barbarian, horns
-white background, borderless, aerial view, top-down view
+white background, borderless, fairy, elf as a baker
+white background, borderless, ogre in office
+white background, borderless, orc of mordor on a ship
+white background, borderless, high elf as a teacher
+white background, borderless, aerial view, top-down view of beach village
