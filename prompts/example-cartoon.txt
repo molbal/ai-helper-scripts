@@ -1,5 +1,6 @@
-white background, borderless, fairy, elf as a baker
-white background, borderless, ogre in office
-white background, borderless, orc of mordor on a ship
-white background, borderless, high elf as a teacher
-white background, borderless, aerial view, top-down view of beach village
+white background, borderless, a fairy as a baker, fairy, baker, bakery, town
+white background, borderless, ogre working in an office, ogre, office, computer, plant, city
+white background, borderless, orc piloting a ship, orc, ship, sea, thunder, lightning
+white background, borderless, a tall high elf as a teacher, elf, school, cottage,
+white background, borderless, aerial view, top-down view of beach village, map, trees, sand, sea, markings
+white background, borderless, map view a village, map, google maps, house, building, road, tram

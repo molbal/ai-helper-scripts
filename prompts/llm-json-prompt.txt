@@ -1,15 +1,7 @@
-Make me an image prompt such as one of these:
+Make me image prompts such as one of these:
 
 {example}
 
-Combine these ideas randomly, add your own matching aesthetics style when you think its good and output only one the descriptions. BE WEIRD QUIRKY Keep prompt small and do not respond with "here is a..."
+Make prompts similar to these, add your own matching aesthetics style when you think its good and output only one the descriptions. Start with a text description followed by tags. Do not respond with "here is a..."
 
 Generate {n} prompts and return them each in new lines
-
-Example for 4 prompts:
-
-generated prompt 1
-generated prompt 2
-generated prompt 3
-generated prompt 4
-

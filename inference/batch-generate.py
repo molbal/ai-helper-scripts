@@ -4,23 +4,49 @@ import random
 import time
 import argparse
 import subprocess
+import requests
 from tqdm import tqdm
 import ollama
 from comfy_api_simplified import ComfyApiWrapper, ComfyWorkflowWrapper
 
 
+def clear_comfyui_gpu_usage():
+    url = "http://127.0.0.1:8188/easyuse/cleangpu"
+    headers = {
+        "accept": "*/*",
+        "accept-language": "en-GB,en;q=0.9,en-US;q=0.8,hu;q=0.7,nl;q=0.6",
+        "comfy-user": "undefined",
+        "sec-ch-ua": "\"Not)A;Brand\";v=\"99\", \"Microsoft Edge\";v=\"127\", \"Chromium\";v=\"127\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin"
+    }
+    response = requests.post(url, headers=headers)
+    time.sleep(2)
+    return response
+
+
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Generate and process image prompts.')
     parser.add_argument('--count', type=int, default=50, help='Number of images to generate.')
-    parser.add_argument('--workflow', type=str, default='workflows/workflow-cartoon.json', help='Path to the workflow file.')
-    parser.add_argument('--example_prompts', type=str, default='prompts/example-cartoon.txt', help='Path to the file containing example prompts.')
-    parser.add_argument('--prompt_file', type=str, default='prompts/llm-json-prompt.txt', help='Path to the prompt template file.')
+    parser.add_argument('--workflow', type=str, default='workflows/workflow-cartoon.json',
+                        help='Path to the workflow file.')
+    parser.add_argument('--example_prompts', type=str, default='prompts/example-cartoon.txt',
+                        help='Path to the file containing example prompts.')
+    parser.add_argument('--prompt_file', type=str, default='prompts/llm-json-prompt.txt',
+                        help='Path to the prompt template file.')
     parser.add_argument('--style', type=str, default='base', help='Style to use.')
     parser.add_argument('--outdir', type=str, default='output', help='Output directory to save images to.')
     parser.add_argument('--llm', type=str, default='gemma2', help='LLM to generate prompts.')
-    parser.add_argument('--prompt_prefix', type=str, default='<lora:Childrens_book_illustration_v2.1.safetensors:1.0> childrens_book_illustration cd ', help='Prefix for prompts. Good for LoRA and trigger words.')
+    parser.add_argument('--prompt_prefix', type=str,
+                        default='<lora:Childrens_book_illustration_v2.1.safetensors:1> childrens_book_illustration ',
+                        help='Prefix for prompts. Good for LoRA and trigger words.')
     parser.add_argument('--kill_processes', action='store_true', help='Kill ollama processes after generating prompts.')
-    parser.add_argument('--save_prompt_txt', action='store_true', help='If yes, saves prompt text next to the picture.')
+    parser.add_argument('--clean_comfy_vram', action='store_true',
+                        help='Attempts clearing VRAM used by ComfyUI before calling Ollama')
+    parser.add_argument('--save_prompt_txt', action='store_true', help='If set, saves prompt text next to the picture.')
     return parser.parse_args()
 
 
@@ -43,24 +69,31 @@ def save_prompts(file_path, prompts):
 def generate_prompts(prompt_template, example_prompts, n, prompt_prefix, model):
     prompt = prompt_template.format(example=example_prompts, n=max(n, 20))
     prompt_list = []
+    past_prompts = []
 
+    pbar = tqdm(total=n, desc='Generating prompts', unit='prompt')
     while len(prompt_list) < n:
-        response = ollama.chat(
+        if past_prompts:
+            recent_prompts = '\n'.join(past_prompts[-5:])  # get the last 5 prompts
+            prompt = prompt_template.format(example=example_prompts + '\n' + recent_prompts, n=max(n, 12))
+        stream = ollama.chat(
             model=model,
             messages=[{'role': 'user', 'content': prompt}],
-            options={'temperature': 0.4}
+            options={'temperature': 0.8},
+            stream=True
         )
 
-        content = response['message']['content']
-        prompts = [line.strip() for line in content.split('\n') if line.strip()]  # split by newline and strip whitespace
-
-        if prompts:
-            prompt_list.extend([prompt_prefix + p for p in prompts])
-
-        if len(prompt_list) >= n:
-            return prompt_list[:n]
-        else:
-            print(f"Currently at: {len(prompt_list)} prompts...")
+        response = ""
+        for chunk in stream:
+            response += chunk['message']['content']
+            if response.endswith('\n'):
+                new_prompt = response.replace('\n', '').strip()
+                pbar.update(1)
+                prompt_list.append(prompt_prefix + " " + new_prompt)
+                past_prompts.append(new_prompt)
+                response = ""
+            if len(prompt_list) >= n:
+                break
 
     return prompt_list[:n]  # Just in case
 
@@ -87,8 +120,12 @@ def main():
     prompt_template = load_text_file(args.prompt_file)
     example_prompts = load_text_file(args.example_prompts)
 
+    # Optionally kill ollama processes
+    if args.clean_comfy_vram:
+        print("Freeing VRAM...")
+        clear_comfyui_gpu_usage()
+
     # Generate prompts
-    print("Generating prompts...")
     prompt_list = generate_prompts(prompt_template, example_prompts, args.count, args.prompt_prefix, args.llm)
     for prompt in prompt_list:
         print(prompt)
@@ -103,7 +140,7 @@ def main():
     for prompt in tqdm(prompt_list, desc='Generating images', unit='image'):
         try:
             wf.set_node_param("SDXL Prompt Styler", "text_positive", prompt)
-            wf.set_node_param("KSampler (Advanced) - BASE","noise_seed", random.randint(0,1024*1024))
+            wf.set_node_param("KSampler (Advanced) - BASE", "noise_seed", random.randint(0, 1024 * 1024))
             results = api.queue_and_wait_images(wf, output_node_title="SaveImage")
             for filename, image_data in results.items():
                 current_time = int(time.time())
