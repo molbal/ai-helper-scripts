@@ -1,0 +1,399 @@
+{
+  "6": {
+    "inputs": {
+      "text": [
+        "57",
+        0
+      ],
+      "clip": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "13",
+        0
+      ],
+      "vae": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "10": {
+    "inputs": {
+      "vae_name": "diffusion_pytorch_model.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "11": {
+    "inputs": {
+      "clip_name1": "t5xxl_fp8_e4m3fn.safetensors",
+      "clip_name2": "model.fp16.safetensors",
+      "type": "flux"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "12": {
+    "inputs": {
+      "unet_name": "flux1-dev-fp8.safetensors",
+      "weight_dtype": "fp8_e5m2"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "13": {
+    "inputs": {
+      "noise": [
+        "25",
+        0
+      ],
+      "guider": [
+        "22",
+        0
+      ],
+      "sampler": [
+        "16",
+        0
+      ],
+      "sigmas": [
+        "17",
+        0
+      ],
+      "latent_image": [
+        "26",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "16": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "17": {
+    "inputs": {
+      "scheduler": "simple",
+      "steps": 25,
+      "denoise": 1,
+      "model": [
+        "77",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "22": {
+    "inputs": {
+      "model": [
+        "77",
+        0
+      ],
+      "conditioning": [
+        "76",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "25": {
+    "inputs": {
+      "noise_seed": 461948257481582
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "26": {
+    "inputs": {
+      "ratio_selected": "9:16 [768x1344 portrait]",
+      "batch_size": 1
+    },
+    "class_type": "Empty Latent Ratio Select SDXL",
+    "_meta": {
+      "title": "Empty Latent Ratio Select SDXL (Mikey)"
+    }
+  },
+  "28": {
+    "inputs": {
+      "model_name": "4x-UltraMix_Restore.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "32": {
+    "inputs": {
+      "upscale_model": [
+        "28",
+        0
+      ],
+      "image": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "36": {
+    "inputs": {
+      "sharpen_radius": 1,
+      "sigma": 0.1,
+      "alpha": 0.1,
+      "image": [
+        "32",
+        0
+      ]
+    },
+    "class_type": "ImageSharpen",
+    "_meta": {
+      "title": "ImageSharpen"
+    }
+  },
+  "44": {
+    "inputs": {
+      "text": [
+        "57",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "45": {
+    "inputs": {
+      "text": [
+        "57",
+        3
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "50": {
+    "inputs": {
+      "prompt": "TF2 sniper as santa claus, oil painting including wooden frame with golden accent",
+      "seed": 592823538651650
+    },
+    "class_type": "Wildcard Processor",
+    "_meta": {
+      "title": "SDXL Prompt Styler"
+    }
+  },
+  "51": {
+    "inputs": {
+      "prompt": "",
+      "seed": 715919968778849
+    },
+    "class_type": "Wildcard Processor",
+    "_meta": {
+      "title": "Prompt 2 with wildcard"
+    }
+  },
+  "52": {
+    "inputs": {
+      "prompt": "",
+      "seed": 347818735086027
+    },
+    "class_type": "Wildcard Processor",
+    "_meta": {
+      "title": "Prompt 3 with wildcard"
+    }
+  },
+  "53": {
+    "inputs": {
+      "prompt": ",",
+      "seed": 357131864207426
+    },
+    "class_type": "Wildcard Processor",
+    "_meta": {
+      "title": "Prompt 4 with wildcard"
+    }
+  },
+  "54": {
+    "inputs": {
+      "prompt": "__pos__",
+      "seed": 199284496223400
+    },
+    "class_type": "Wildcard Processor",
+    "_meta": {
+      "title": "Prompt 5 with wildcard"
+    }
+  },
+  "55": {
+    "inputs": {
+      "delimiter": " ",
+      "text1": [
+        "50",
+        0
+      ],
+      "text2": [
+        "51",
+        0
+      ],
+      "text3": [
+        "52",
+        0
+      ],
+      "text4": [
+        "53",
+        0
+      ],
+      "text5": [
+        "54",
+        0
+      ]
+    },
+    "class_type": "TextConcat",
+    "_meta": {
+      "title": "Text Concat (Mikey)"
+    }
+  },
+  "56": {
+    "inputs": {
+      "prompt": "bad quality, watermark",
+      "seed": 169178272127836
+    },
+    "class_type": "Wildcard Processor",
+    "_meta": {
+      "title": "Negative with Wildcard (Refiner Only)"
+    }
+  },
+  "57": {
+    "inputs": {
+      "text_positive_g": [
+        "55",
+        0
+      ],
+      "text_positive_l": [
+        "55",
+        0
+      ],
+      "text_negative": [
+        "56",
+        0
+      ],
+      "artist": "none",
+      "movie": "none",
+      "style": "sai-cinematic",
+      "fooocus_enhance": "OFF",
+      "fooocus_negative": "OFF",
+      "universal_negative": "OFF"
+    },
+    "class_type": "SDXL Prompt Styler (JPS)",
+    "_meta": {
+      "title": "SDXL Prompt Styler (JPS)"
+    }
+  },
+  "60": {
+    "inputs": {
+      "text": "cinematic film still team fortress heavy portrait as santa claus, oil painting including wooden frame with golden accent ,",
+      "anything": [
+        "57",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Final Prompt"
+    }
+  },
+  "61": {
+    "inputs": {
+      "filename_prefix": "2024-08-07/SMALL/small09-49-55",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "1ST GENERATION"
+    }
+  },
+  "76": {
+    "inputs": {
+      "guidance": 3.5,
+      "conditioning": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "77": {
+    "inputs": {
+      "max_shift": 1.1500000000000001,
+      "base_shift": 0.5,
+      "width": 1024,
+      "height": 1024,
+      "model": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingFlux",
+    "_meta": {
+      "title": "ModelSamplingFlux"
+    }
+  },
+  "79": {
+    "inputs": {
+      "filename_prefix": "2024-08-07/UPSCALED/big09-49-55",
+      "only_preview": false,
+      "images": [
+        "36",
+        0
+      ]
+    },
+    "class_type": "easy imageSave",
+    "_meta": {
+      "title": "SaveImage"
+    }
+  }
+}

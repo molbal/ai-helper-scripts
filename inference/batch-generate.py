@@ -46,6 +46,8 @@ def parse_arguments():
     parser.add_argument('--kill_processes', action='store_true', help='Kill ollama processes after generating prompts.')
     parser.add_argument('--clean_comfy_vram', action='store_true',
                         help='Attempts clearing VRAM used by ComfyUI before calling Ollama')
+    parser.add_argument('--run_examples', action='store_true',
+                        help='If set to true, examples from the --example_prompts file will be queued first. These do not count in the --count value')
     parser.add_argument('--save_prompt_txt', action='store_true', help='If set, saves prompt text next to the picture.')
     return parser.parse_args()
 
@@ -107,6 +109,30 @@ def kill_ollama_processes():
             print(f"Error killing process {process}: {e}")
 
 
+def generate_image(wf, args, api, prompt):
+    try:
+        try:
+            wf.set_node_param("SDXL Prompt Styler", "text_positive", prompt)
+            wf.set_node_param("SDXL Prompt Styler", "prompt", prompt)
+        except Exception as e:
+            print(f"Error setting prompt: {e}")
+        try:
+            wf.set_node_param("KSampler (Advanced) - BASE", "noise_seed", random.randint(0, 1024 * 1024))
+        except Exception as e:
+            print(f"Error setting noise seed: {e}")
+        results = api.queue_and_wait_images(wf, output_node_title="SaveImage")
+        for filename, image_data in results.items():
+            current_time = int(time.time())
+            output_image_path = f"{args.outdir}/{current_time}-{args.style}.png"
+            with open(output_image_path, "wb") as f:
+                f.write(image_data)
+            if args.save_prompt_txt:
+                with open(f"{args.outdir}/{current_time}-{args.style}.txt", "w") as f:
+                    f.write(prompt)
+    except Exception as e:
+        print(f"⚠️ Could not generate prompt {prompt}: error: {e}")
+
+
 def main():
     args = parse_arguments()
 
@@ -137,21 +163,13 @@ def main():
 
     api = ComfyApiWrapper("http://127.0.0.1:8188/")
     wf = ComfyWorkflowWrapper(args.workflow)
+
+    if args.run_examples:
+        for prompt in tqdm(example_prompts.split('\n'), desc='Generating examples', unit='image'):
+            generate_image(wf, args, api, prompt)
+
     for prompt in tqdm(prompt_list, desc='Generating images', unit='image'):
-        try:
-            wf.set_node_param("SDXL Prompt Styler", "text_positive", prompt)
-            wf.set_node_param("KSampler (Advanced) - BASE", "noise_seed", random.randint(0, 1024 * 1024))
-            results = api.queue_and_wait_images(wf, output_node_title="SaveImage")
-            for filename, image_data in results.items():
-                current_time = int(time.time())
-                output_image_path = f"{args.outdir}/{current_time}-{args.style}.png"
-                with open(output_image_path, "wb") as f:
-                    f.write(image_data)
-                if args.save_prompt_txt:
-                    with open(f"{args.outdir}/{current_time}-{args.style}.txt", "w") as f:
-                        f.write(prompt)
-        except Exception as e:
-            print(e)
+        generate_image(wf, args, api, prompt)
 
 
 if __name__ == '__main__':
