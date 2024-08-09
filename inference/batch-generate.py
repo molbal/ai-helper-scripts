@@ -23,9 +23,11 @@ def clear_comfyui_gpu_usage():
         "sec-fetch-mode": "cors",
         "sec-fetch-site": "same-origin"
     }
-    response = requests.post(url, headers=headers)
+    try:
+        response = requests.post(url, headers=headers)
+    except Exception as e:
+        print(f"Error while clearing ComfyUI VRAM: {e}")
     time.sleep(2)
-    return response
 
 
 def parse_arguments():
@@ -119,7 +121,8 @@ def generate_image(wf, args, api, prompt):
         try:
             wf.set_node_param("KSampler (Advanced) - BASE", "noise_seed", random.randint(0, 1024 * 1024))
         except Exception as e:
-            print(f"Error setting noise seed: {e}")
+            pass
+
         results = api.queue_and_wait_images(wf, output_node_title="SaveImage")
         for filename, image_data in results.items():
             current_time = int(time.time())
