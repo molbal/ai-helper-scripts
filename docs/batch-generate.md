@@ -54,6 +54,7 @@ python ./inference/batch-generate.py --kill_processes --save_prompt_txt --count 
 python ./inference/batch-generate.py --kill_processes --run_examples --count 10 --outdir=output/2024-07-21/apocalyptic --llm llama3:8b-instruct-q6_K --style=sai-photographic --workflow workflows/workflow-ultrawide-apoc.json --example_prompts prompts/example-apoc.txt --prompt_prefix "<lora:Apocalyptic:1.5> <lora:add-detail-xl.safetensors:1.8> apocalyptic, 32k UHD resolution, RAW, best quality, ultrawide"
 python ./inference/batch-generate.py --kill_processes --clean_comfy_vram --save_prompt_txt --count 25 --outdir=output/2024-08-07/flux --llm llama3.1:8b-instruct-q5_1 --workflow workflows/workflow-flex.json --example_prompts prompts/example-flux.txt --prompt_prefix " "
 python ./inference/batch-generate.py --kill_processes --count 30 --outdir=output/2024-07-24/apocalyptic --llm llama3.1:8b-instruct-q5_1 --style="sai-digital art" --workflow workflows/workflow-ultrawide-apoc-v2.json --example_prompts prompts/example-apoc.txt --prompt_prefix "<lora:Apocalyptic-v2-albedobase.safetensors:0.65> <lora:add-detail-xl.safetensors:1.2>,  apocalyptic "
+python ./inference/batch-generate.py --kill_processes --clean_comfy_vram  --count 10 --outdir=output/2024-08-14/apocalyptic --llm llama3.1:8b-instruct-q5_1 --style="base" --workflow workflows/top-down-asset.json --example_prompts prompts/example-sprite.txt --prompt_file "prompts/top-down-sprites.txt" --prompt_prefix "<lora:PixelartXl.safetensors:1.0>, white background, ((top-down sprite)) "
 ```
 
 #### Notes

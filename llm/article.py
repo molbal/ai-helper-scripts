@@ -1,9 +1,12 @@
 import sys
 import requests
 from bs4 import BeautifulSoup
-from tqdm import tqdm
+import tqdm
 import ollama
 import re
+from datetime import datetime
+
+from numpy.core.defchararray import upper
 
 
 def clean_text(text):
@@ -11,6 +14,12 @@ def clean_text(text):
     text = re.sub(r'\s+', ' ', text)  # Replace multiple whitespace with single space
     return text.strip()
 
+def format_title(text_tag):
+    """ Convert title tag to upper case. """
+    # Safe check for title tag
+    if text_tag:
+        return text_tag.get_text().upper()
+    return ""
 
 def fetch_substack_article(url):
     """ Fetch and extract text content from a Substack article URL. """
@@ -18,14 +27,15 @@ def fetch_substack_article(url):
         response = requests.get(url)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
-
         # Extract article content
         content = soup.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
         article_text = ' '.join([clean_text(tag.get_text()) for tag in content])
-        return article_text
+        article_title = soup.find('title')
+        return format_title(article_title) + "\n" + article_text
     except requests.RequestException as e:
         print(f"Error fetching {url}: {e}")
         return ""
+
 
 
 def main():
@@ -34,7 +44,8 @@ def main():
         sys.exit(1)
 
     context_articles = []
-    for url in sys.argv[1:]:
+    # Fetch URLs with tqdm progress bar
+    for url in tqdm.tqdm(sys.argv[1:], desc="Fetching articles"):
         article_text = fetch_substack_article(url)
         if article_text:
             context_articles.append(article_text)
@@ -44,36 +55,45 @@ def main():
         sys.exit(1)
 
     context = ' '.join(context_articles)
-
-    print("Context articles loaded. Please enter your prompt:")
+    print("\nContext articles loaded. Please enter context of the new article:")
     try:
         prompt = input()
         # Generate LLM prompt
-        llm_prompt = f"Based on the style and content of the following context articles:\n{context}\n\nWrite an article on the following topic:\n{prompt}"
+        llm_prompt = (f"SYSTEM: You are an AI enthusiastic software architect, who believes in consumer rights, privacy and democratization. Dislikes corporate overreach and authoritarian style controls."
+                      f"TASK: Please write a an article in the style of the context articles.\n\n"
+                      f"NEW ARTICLE CONTEXT:\n{prompt}\n\n"
+                      f"RELEVANT ARTICLES:\n{context}")
 
-        print("")
-        print("---- Generated LLM Prompt: ----")
-        print("")
-        print(llm_prompt)
+        # Create timestamp for filenames
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        prompt_filename = f"prompt_{timestamp}.md"
+        response_filename = f"response_{timestamp}.md"
 
+        # Save prompt to file
+        with open(prompt_filename, 'w') as f:
+            f.write(llm_prompt)
+        print(f"\nPrompt saved to {prompt_filename}")
+
+        # Generate response
         stream = ollama.chat(
-            model='mistral-nemo',
+            model='qwen2.5',
             messages=[{'role': 'user', 'content': llm_prompt}],
             options={'temperature': 0.5},
             stream=True
         )
+
         content = ""
         for chunk in stream:
             content += chunk['message']['content']
             print(chunk['message']['content'], end='', flush=True)
 
-        print("")
-        print("---- Response ----")
-        print("")
-        print(content)
+        # Save response to file
+        with open(response_filename, 'w') as f:
+            f.write(content)
+        print(f"\nResponse saved to {response_filename}")
 
     except EOFError:
-        print("Exiting.")
+        print("\nExiting.")
 
 
 if __name__ == "__main__":

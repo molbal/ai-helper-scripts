@@ -1,0 +1,15 @@
+Example 1:
+Input: In this image we can see a painting of a hen and a ball on the mat. The background is dark.
+Output: A hen and a ball on a mat. The background is dark.
+
+Example 2:
+Input: In this painting, a person is walking down the street. There is a car parked on the side of the street in front of the person. There are power lines hanging above the street next to a hill.
+Output: A person is walking down the street. In front of the person, there is a car park on the streetside. There are power lines hanging above the street. There is a hill in the background.
+
+Example 3:
+Input: A painting of a bed in a room. There are two people laying on the bed. There is a ceiling fan hanging from the ceiling.
+Output: Two paople are laying on the bed. The bed is in a room. There is a ceiling fan.
+
+Example 4:
+Input: A man is standing in a field of tall grass. There is a wooden fence in front of the field. A house is sitting behind the fence. There are wires hanging above the house. A large animal is standing next to the man.
+Output: A man is standing in a field. There is tall grass and a wooden fence. The wooden fence is in the front of the field. There is a house behind the fence. There are wires hanging above the house. There is a large animal standing next to the man, in the field.

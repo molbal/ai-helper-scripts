@@ -24,14 +24,14 @@ pip install tqdm ollama
 | Parameter           | Description                                    | Example                                    | Default                                    |
 |---------------------|------------------------------------------------|--------------------------------------------|:-------------------------------------------|
 | `<directory>`       | Path to the directory containing text files.   | `C:\tools\training\illustration_pending`   | -                                          |
-| `--model_name`    | Name of the language model to use.             | `llama3:8b-instruct-q6_K`                  | `llama3`                                   |
+| `--model_name`    | Name of the language model to use.             | `llama3.1:8b-instruct-q5_1`                  | `llama3.1:8b-instruct-q5_1`                                   |
 | `--examples_file` | Path to the file containing few-shot examples. | `prompts/description-to-tags-examples.txt` | `prompts/description-to-tags-examples.txt` |
 
 ### Usage
 
 Use the command line to run the script, providing the required arguments:
 ```sh
-python data-prep/description-to-tags.py <directory> --model_name=<model_name> --examples_file=<examples_file>
+python data-prep/description-to-nl.py <directory> --model_name=<model_name> --examples_file=<examples_file>
 ```
 
 - `<directory>`: Path to the directory containing text files.
@@ -40,6 +40,6 @@ python data-prep/description-to-tags.py <directory> --model_name=<model_name> --
 
 Example:
 ```sh
-python data-prep/description-to-tags.py D:\ML\training\pending --model_name=llama3.1:8b-instruct-q5_1
+python data-prep/description-to-nl.py D:\ML\training\pending
 ```
 

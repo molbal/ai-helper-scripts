@@ -1,6 +1,4 @@
-white background, borderless, from above, a fairy as a baker, fairy, baker, bakery, town
-white background, borderless, from above, ogre working in an office, ogre, office, computer, plant, city
-white background, borderless, from above, orc piloting a ship, orc, ship, sea, thunder, lightning
-white background, borderless, from above, a tall high elf as a teacher, elf, school, cottage,
-white background, borderless, aerial view, top-down view of beach village, map, trees, sand, sea, markings
-white background, borderless, map view a village, map, google maps, house, building, road, tram
+screenshot from an rpg game, sharp, tieflings in a field
+screenshot rts, army of dwarves in a city, sharp
+screenshot of an FPS game, tiefling wizard fights a monster, sharp
+screenshot of a tps game, human cleric casts a spell in front of zombies

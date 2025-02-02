@@ -1,0 +1,7 @@
+Make me image descriptions for top-down sprites such as one of these:
+
+{example}
+
+Make prompts similar to these, add your own matching aesthetics style when you think its good and output only one the descriptions. Do not respond with "here is a..."
+
+Generate {n} prompts and return them each in new lines. Each prompt should be one line.

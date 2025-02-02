@@ -44,12 +44,12 @@
     "inputs": {
       "add_noise": "enable",
       "noise_seed": 94745627,
-      "steps": 30,
+      "steps": 40,
       "cfg": 6.6000000000000005,
       "sampler_name": "dpmpp_2m",
       "scheduler": "karras",
       "start_at_step": 0,
-      "end_at_step": 35,
+      "end_at_step": 40,
       "return_with_leftover_noise": "enable",
       "model": [
         "117",
