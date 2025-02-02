@@ -10,15 +10,15 @@ This repository contains a set of Python scripts designed to simplify and automa
 
 The following scripts are included in this repository:
 
-| Script                   | Description                                                                                   | Documentation                                     |
-|--------------------------|-----------------------------------------------------------------------------------------------|---------------------------------------------------|
-| `article.py`             | Generates articles based on the style and content of provided Substack article URLs.          | [View Documentation](docs/article.md)             |
-| `batch-generate.py`      | Automates the process of generating image prompts and creating images based on these prompts. | [View Documentation](docs/batch-generate.md)      |
-| `description-to-tags.py` | Converts image descriptions to tags for use in image classification models.                   | [View Documentation](docs/description-to-tags.md) |
-| `description-to-nl.py`   | Converts image descriptions to natural language for use in image classification models.       | [View Documentation](docs/description-to-tags.md) |
-| `img-to-square.py`       | Resizes images to a square shape while maintaining their aspect ratio.                        | [View Documentation](docs/img-to-square.md)       |
-| `upscale-dataset.py`     | Upscales a dataset of images using a specified model.                                         | [View Documentation](docs/upscale-dataset.md)     |
-| `vae-process.py`         | Reencodes images using a Variational Autoencoder (VAE) model.                                 | [View Documentation](docs/vae-process.md)         |
+| Script                   | Description                                                                                   | Documentation                                       |
+|--------------------------|-----------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| `article.py`             | Generates articles based on the style and content of provided Substack article URLs.          | [View Documentation](docs/article.md)               |
+| `batch-generate.py`      | Automates the process of generating image prompts and creating images based on these prompts. | [View Documentation](docs/batch-generate.md)        |
+| `description-to-tags.py` | Converts image descriptions to tags for use in image classification models.                   | [View Documentation](docs/description-to-tags.md)   |
+| `description-to-nl.py`   | Converts image descriptions to natural language for use in image classification models.       | [View Documentation](docs/description-to-nl.md)     |
+| `img-to-square.py`       | Resizes images to a square shape while maintaining their aspect ratio.                        | [View Documentation](docs/img-to-square.md)         |
+| `upscale-dataset.py`     | Upscales a dataset of images using a specified model.                                         | [View Documentation](docs/upscale-dataset.md)       |
+| `vae-process.py`         | Reencodes images using a Variational Autoencoder (VAE) model.                                 | [View Documentation](docs/vae-process.md)           |
 
 ## Requirements
 
